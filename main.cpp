@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "Cliente.h"
-#include "menuView.h"
+#include "model/Cliente.h"
+#include "view/menuView.h"
 
 int main(){
     menuView::menu();

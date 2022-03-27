@@ -67,23 +67,29 @@ build CMakeFiles/Unter.dir/main.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Aya
   OBJECT_DIR = CMakeFiles\Unter.dir
   OBJECT_FILE_DIR = CMakeFiles\Unter.dir
 
-build CMakeFiles/Unter.dir/Cliente.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Ayala/CLionProjects/Unter/Cliente.cpp || cmake_object_order_depends_target_Unter
-  DEP_FILE = CMakeFiles\Unter.dir\Cliente.cpp.obj.d
+build CMakeFiles/Unter.dir/model/Cliente.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Ayala/CLionProjects/Unter/model/Cliente.cpp || cmake_object_order_depends_target_Unter
+  DEP_FILE = CMakeFiles\Unter.dir\model\Cliente.cpp.obj.d
   FLAGS = -g -std=gnu++14
   OBJECT_DIR = CMakeFiles\Unter.dir
-  OBJECT_FILE_DIR = CMakeFiles\Unter.dir
+  OBJECT_FILE_DIR = CMakeFiles\Unter.dir\model
 
-build CMakeFiles/Unter.dir/menuView.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Ayala/CLionProjects/Unter/menuView.cpp || cmake_object_order_depends_target_Unter
-  DEP_FILE = CMakeFiles\Unter.dir\menuView.cpp.obj.d
+build CMakeFiles/Unter.dir/view/menuView.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Ayala/CLionProjects/Unter/view/menuView.cpp || cmake_object_order_depends_target_Unter
+  DEP_FILE = CMakeFiles\Unter.dir\view\menuView.cpp.obj.d
   FLAGS = -g -std=gnu++14
   OBJECT_DIR = CMakeFiles\Unter.dir
-  OBJECT_FILE_DIR = CMakeFiles\Unter.dir
+  OBJECT_FILE_DIR = CMakeFiles\Unter.dir\view
 
-build CMakeFiles/Unter.dir/Alimento.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Ayala/CLionProjects/Unter/Alimento.cpp || cmake_object_order_depends_target_Unter
-  DEP_FILE = CMakeFiles\Unter.dir\Alimento.cpp.obj.d
+build CMakeFiles/Unter.dir/model/Alimento.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Ayala/CLionProjects/Unter/model/Alimento.cpp || cmake_object_order_depends_target_Unter
+  DEP_FILE = CMakeFiles\Unter.dir\model\Alimento.cpp.obj.d
   FLAGS = -g -std=gnu++14
   OBJECT_DIR = CMakeFiles\Unter.dir
-  OBJECT_FILE_DIR = CMakeFiles\Unter.dir
+  OBJECT_FILE_DIR = CMakeFiles\Unter.dir\model
+
+build CMakeFiles/Unter.dir/controller/clienteController.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users/Ayala/CLionProjects/Unter/controller/clienteController.cpp || cmake_object_order_depends_target_Unter
+  DEP_FILE = CMakeFiles\Unter.dir\controller\clienteController.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles\Unter.dir
+  OBJECT_FILE_DIR = CMakeFiles\Unter.dir\controller
 
 
 # =============================================================================
@@ -93,7 +99,7 @@ build CMakeFiles/Unter.dir/Alimento.cpp.obj: CXX_COMPILER__Unter_Debug C$:/Users
 #############################################
 # Link the executable Unter.exe
 
-build Unter.exe: CXX_EXECUTABLE_LINKER__Unter_Debug CMakeFiles/Unter.dir/main.cpp.obj CMakeFiles/Unter.dir/Cliente.cpp.obj CMakeFiles/Unter.dir/menuView.cpp.obj CMakeFiles/Unter.dir/Alimento.cpp.obj
+build Unter.exe: CXX_EXECUTABLE_LINKER__Unter_Debug CMakeFiles/Unter.dir/main.cpp.obj CMakeFiles/Unter.dir/model/Cliente.cpp.obj CMakeFiles/Unter.dir/view/menuView.cpp.obj CMakeFiles/Unter.dir/model/Alimento.cpp.obj CMakeFiles/Unter.dir/controller/clienteController.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Unter.dir

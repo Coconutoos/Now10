@@ -3,4 +3,4 @@ project(Unter)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Unter main.cpp Cliente.cpp Cliente.h menuView.cpp menuView.h Alimento.cpp Alimento.h)
+add_executable(Unter main.cpp model/Cliente.cpp model/Cliente.h view/menuView.cpp view/menuView.h model/Alimento.cpp model/Alimento.h controller/clienteController.cpp controller/clienteController.h)
