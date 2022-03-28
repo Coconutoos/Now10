@@ -29,7 +29,6 @@ public:
 
     void setHistoricoProduto(const std::vector<int> &historicoProduto);
 
-    void copiarHistorico(int historicoAntigo[], int historicoNovo[], int tam);
 };
 
 #endif //UNTER_CLIENTE_H

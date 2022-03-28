@@ -1,6 +1,7 @@
 #include <iostream>
 #include "menuView.h"
 
+
 void menuView::printMenu(){
     std::cout<<"\nEscolha uma opcao:"<< std::endl;
 
@@ -26,6 +27,7 @@ void menuView::menu(){
         std::cin >> op;
         switch(op){
             case 1:
+                controller.cadastrarCliente();
                 break;
             case 2:
                 break;
