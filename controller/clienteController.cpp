@@ -7,11 +7,10 @@ void clienteController::cadastrarCliente() {
     view.readName(newName);
     view.readQtdViagens(newQtdViagens);
     view.readHistorico(newHistoricoProduto);
-    std::cout << newName;
-    std::cout << newQtdViagens;
+    std::cout << newName << std::endl;
+    std::cout << newQtdViagens << std::endl;
 
-
-    for(int i; i <= newHistoricoProduto.size(); i++){
+    for(int i = 0; i < newHistoricoProduto.size(); i++){
         std::cout << newHistoricoProduto[i] << std::endl;
     }
 }

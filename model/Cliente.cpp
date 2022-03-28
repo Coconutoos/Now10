@@ -3,6 +3,12 @@
 Cliente::Cliente(int newId, std::string newNome, std::vector<int> newHistoricoProduto) :
                     id(newId), nome(newNome), historicoProduto(std::move(newHistoricoProduto)){}
 
+Cliente::Cliente(){
+    id = 0;
+    nome = "";
+    qtdViagens = 0;
+}
+
 int Cliente::getId() const {
     return id;
 }

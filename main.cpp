@@ -4,6 +4,7 @@
 #include "view/menuView.h"
 
 int main(){
-    menuView::menu();
+    menuView mainMenu;
+    mainMenu.menu();
     return 0;
 }

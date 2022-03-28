@@ -1,8 +1,10 @@
 #include "clienteView.h"
 
-void clienteView::readName(std::string name){
+void clienteView::readName(std::string &name){
     std::cout << "Digite o nome do cliente" << std::endl;
+    std::cin.ignore();
     std::getline(std::cin, name);
+
 }
 
 void clienteView::readQtdViagens(int &qtdViagens){

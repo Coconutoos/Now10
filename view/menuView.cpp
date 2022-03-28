@@ -27,7 +27,7 @@ void menuView::menu(){
         std::cin >> op;
         switch(op){
             case 1:
-                controller.cadastrarCliente();
+                controllerCliente.cadastrarCliente();
                 break;
             case 2:
                 break;

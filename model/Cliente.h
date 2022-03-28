@@ -13,6 +13,7 @@ private:
     void setID(int newId);
 
 public:
+    Cliente();
     Cliente(int newId, std::string newNome, std::vector<int> newHistoricoProduto);
 
     int getId() const;

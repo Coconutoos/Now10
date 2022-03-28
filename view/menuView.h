@@ -4,11 +4,11 @@
 
 class menuView {
 private:
-    static clienteController controller;
+    clienteController controllerCliente;
     //static AlimentoController AlimentoController;
 public:
-    static void printMenu();
-    static void menu();
+    void printMenu();
+    void menu();
 };
 
 #endif //UNTER_MENUVIEW_H

@@ -6,7 +6,7 @@
 
 class clienteView{
 public:
-    void readName(std::string name);
+    void readName(std::string &name);
     void readQtdViagens(int &qtdViagens);
     void readHistorico(std::vector<int> &historicoProduto);
 };
