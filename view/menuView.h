@@ -3,9 +3,6 @@
 #include "../controller/clienteController.h"
 
 class menuView {
-private:
-    clienteController controllerCliente;
-    //static AlimentoController AlimentoController;
 public:
     void printMenu();
     void menu();

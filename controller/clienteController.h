@@ -4,11 +4,9 @@
 #include "../view/clienteView.h"
 
 class clienteController {
-private:
-    Cliente model;
-    clienteView view;
 public:
-    void cadastrarCliente();
+    static int cadastrarCliente();
+    static int removerClienteController();
 };
 
 

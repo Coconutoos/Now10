@@ -6,9 +6,10 @@
 
 class clienteView{
 public:
-    void readName(std::string &name);
-    void readQtdViagens(int &qtdViagens);
-    void readHistorico(std::vector<int> &historicoProduto);
+    static void readName(std::string &name);
+    static void readQtdViagens(int &qtdViagens);
+    static void readHistorico(std::vector<int> &historicoProduto);
+    static int removerCliente();
 };
 
 

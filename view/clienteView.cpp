@@ -21,3 +21,10 @@ void clienteView::readHistorico(std::vector<int> &historicoProduto){
         std::cin >> input;
     }
 }
+
+int clienteView::removerCliente(){
+    int aux;
+    std::cout << "Digite o nome do id a ser removido" << std::endl;
+    std::cin >> aux;
+    return aux;
+}

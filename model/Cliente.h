@@ -2,6 +2,7 @@
 #define UNTER_CLIENTE_H
 #include <string>
 #include <vector>
+#include <fstream>
 
 class Cliente {
 
@@ -10,11 +11,11 @@ private:
     std::string nome;
     int qtdViagens;
     std::vector<int> historicoProduto;
-    void setID(int newId);
+    static int verificaNome(std::string nome);
+    void guardaCliente();
 
 public:
-    Cliente();
-    Cliente(int newId, std::string newNome, std::vector<int> newHistoricoProduto);
+    Cliente(int newId, std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
 
     int getId() const;
 
@@ -30,6 +31,9 @@ public:
 
     void setHistoricoProduto(const std::vector<int> &historicoProduto);
 
+    static int salvarCliente(std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
+
+    static int removeCliente(int idSearch);
 };
 
 #endif //UNTER_CLIENTE_H

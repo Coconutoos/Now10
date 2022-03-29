@@ -1,16 +1,20 @@
 #include "clienteController.h"
 
-void clienteController::cadastrarCliente() {
+
+
+ int clienteController::cadastrarCliente() {
     std::string newName;
     int newQtdViagens;
     std::vector<int> newHistoricoProduto;
-    view.readName(newName);
-    view.readQtdViagens(newQtdViagens);
-    view.readHistorico(newHistoricoProduto);
-    std::cout << newName << std::endl;
-    std::cout << newQtdViagens << std::endl;
+    clienteView::readName(newName);
+    clienteView::readQtdViagens(newQtdViagens);
+    clienteView::readHistorico(newHistoricoProduto);
+    if(!Cliente::salvarCliente(newName, newQtdViagens, newHistoricoProduto)) return 0;
+}
 
-    for(int i = 0; i < newHistoricoProduto.size(); i++){
-        std::cout << newHistoricoProduto[i] << std::endl;
-    }
+int clienteController::removerClienteController(){
+    int removeId;
+    removeId = clienteView::removerCliente();
+    if(Cliente::removeCliente(removeId)) return 1;
+    return 0;
 }
