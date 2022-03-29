@@ -22,9 +22,9 @@ void clienteView::readHistorico(std::vector<int> &historicoProduto){
     }
 }
 
-int clienteView::removerCliente(){
+int clienteView::viewGetClienteId(){
     int aux;
-    std::cout << "Digite o nome do id a ser removido" << std::endl;
+    std::cout << "Digite o id do cliente:" << std::endl;
     std::cin >> aux;
     return aux;
 }

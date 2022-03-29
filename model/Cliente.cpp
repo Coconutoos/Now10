@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Cliente.h"
 #include "stdio.h"
+#include "../view/clienteView.h"
 #include <ctime>
 
 Cliente::Cliente(int newId, std::string newNome, int newQtdviagens ,std::vector<int> newHistoricoProduto) : id(newId), nome(newNome), qtdViagens(newQtdviagens),historicoProduto(std::move(newHistoricoProduto)){}
@@ -33,22 +34,45 @@ void Cliente::setHistoricoProduto(const std::vector<int> &historicoProduto) {
     Cliente::historicoProduto = historicoProduto;
 }
 
-void Cliente::erroNomeLog(int id){
+void Cliente::errorLog(int id, std::string msg){
     std::ofstream log("../log.txt", std::fstream::app);
     time_t now = time(0);
     std::string dt = ctime(&now);
     dt.pop_back();
     if(log.is_open()){
-        log << dt << " Erro (id: "<< id << ") : nome nao cadastrado" << std::endl;
+        log << dt << " Erro (id: "<< id << ") : " << msg << std::endl;
     }
+}
+
+bool Cliente::validaCliente(int newId,std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto){
+    std::vector<int>::iterator it;
+
+    if(!Cliente::verificaNome(newNome)){
+        errorLog(newId, "Nome nao cadastrado");
+        return false;
+    }
+
+    if(newQtdviagens <= 0){
+        errorLog(newId, "Quantidade de viagens invalida");
+        return false;
+    }
+
+    for(it = newHistoricoProduto.begin(); it < newHistoricoProduto.end(); it++){
+        if(*it <= 0){
+            errorLog(newId, "Valor do historico invalido");
+            return false;
+        }
+
+    }
+    return true;
 }
 
 int Cliente::salvarCliente(std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto){
     int newId = Cliente::generateId();
-    if(!Cliente::verificaNome(newNome)){
-        erroNomeLog(newId);
-        return 0;
-    }
+
+
+    if(!validaCliente(newId, newNome, newQtdviagens, newHistoricoProduto) return 0;
+
     Cliente cliente(newId, newNome, newQtdviagens, std::move(newHistoricoProduto));
     cliente.guardaCliente();
     return 1;
@@ -98,4 +122,50 @@ int Cliente::generateId(){
         sscanf(line.c_str(),"%d%*c", &aux);
     };
     return aux+1;
+}
+
+int Cliente::exists(int id){
+    std::ifstream dataBase("../clientesBase.txt");
+    std::string line;
+    int aux = 0;
+    char buffer[100];
+    while(getline(dataBase, line)){
+        sscanf(line.c_str(),"%d%*c", &aux);
+        if(aux == id) return 1;
+    };
+    dataBase.close();
+    return 0;
+}
+
+int Cliente::alterar(int id){
+    std::string newName;
+    int newQtdViagens;
+    int flag = 0;
+    std::vector<int> newHistoricoProduto;
+    clienteView::readName(newName);
+    clienteView::readQtdViagens(newQtdViagens);
+    clienteView::readHistorico(newHistoricoProduto);
+
+    std::vector<int>::iterator it;
+    std::ifstream dataBase("../clientesBase.txt");
+    std::ofstream temp("../temp.txt");
+    std::string line;
+    int aux = 0;
+    char buffer[100];
+    while(getline(dataBase, line)){
+        sscanf(line.c_str(),"%d%*c", &aux);
+        if(aux != id) temp << line << std::endl;
+        else{
+            flag = 1;
+            temp << id << ',' << newName << ',' << newQtdViagens;
+            for(it = newHistoricoProduto.begin(); it < newHistoricoProduto.end(); it++)
+                temp << "," << *it;
+            temp << std::endl;
+        }
+    };
+    dataBase.close();
+    temp.close();
+    remove("../clientesBase.txt");
+    rename("../temp.txt", "../clientesBase.txt");
+    return flag;
 }

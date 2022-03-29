@@ -15,7 +15,16 @@
 
 int clienteController::removerClienteController(){
     int removeId;
-    removeId = clienteView::removerCliente();
+    removeId = clienteView::viewGetClienteId();
     if(Cliente::removeCliente(removeId)) return 1;
     return 0;
+}
+
+int clienteController::alterarClienteController(){
+    int alterarId;
+    alterarId = clienteView::viewGetClienteId();
+    if(Cliente::exists(alterarId)){
+        if(Cliente::alterar(alterarId)) return 1;
+        else return 0;
+    }
 }

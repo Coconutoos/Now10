@@ -14,8 +14,8 @@ private:
     static int verificaNome(std::string nome);
     void guardaCliente();
     static int generateId();
-    static void erroNomeLog(int id);
-
+    static void errorLog(int id, std::string msg);
+    static bool validaCliente( int newId, std::string newNome, int newQtdviagens, std::vector<int> newHistoricoProduto);
 public:
     Cliente(int newId, std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
 
@@ -36,6 +36,10 @@ public:
     static int salvarCliente(std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
 
     static int removeCliente(int idSearch);
+
+    static int exists(int id);
+
+    static int alterar(int id);
 };
 
 #endif //UNTER_CLIENTE_H

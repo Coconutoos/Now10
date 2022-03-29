@@ -9,7 +9,7 @@ public:
     static void readName(std::string &name);
     static void readQtdViagens(int &qtdViagens);
     static void readHistorico(std::vector<int> &historicoProduto);
-    static int removerCliente();
+    static int viewGetClienteId();
 };
 
 

@@ -27,12 +27,14 @@ void menuView::menu(){
         std::cin >> op;
         switch(op){
             case 1:
-                clienteController::cadastrarCliente();
+                if(clienteController::cadastrarCliente()) std::cout << "Cliente cadastrado!" << std::endl;
+                else std::cout << "Erro! o cliente nao foi cadastrado!" << std::endl;
                 break;
             case 2:
                 clienteController::removerClienteController();
                 break;
             case 3:
+                if(clienteController::alterarClienteController()) std::cout << "Cliente alterado com sucesso!" << std::endl;
                 break;
             case 4:
                 break;

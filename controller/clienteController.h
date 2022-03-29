@@ -7,6 +7,7 @@ class clienteController {
 public:
     static int cadastrarCliente();
     static int removerClienteController();
+    static int alterarClienteController();
 };
 
 
