@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Cliente.h"
 #include "stdio.h"
+#include <ctime>
 
 Cliente::Cliente(int newId, std::string newNome, int newQtdviagens ,std::vector<int> newHistoricoProduto) : id(newId), nome(newNome), qtdViagens(newQtdviagens),historicoProduto(std::move(newHistoricoProduto)){}
 
@@ -32,11 +33,25 @@ void Cliente::setHistoricoProduto(const std::vector<int> &historicoProduto) {
     Cliente::historicoProduto = historicoProduto;
 }
 
+void Cliente::erroNomeLog(int id){
+    std::ofstream log("../log.txt", std::fstream::app);
+    time_t now = time(0);
+    std::string dt = ctime(&now);
+    dt.pop_back();
+    if(log.is_open()){
+        log << dt << " Erro (id: "<< id << ") : nome nao cadastrado" << std::endl;
+    }
+}
+
 int Cliente::salvarCliente(std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto){
-    if(!Cliente::verificaNome(newNome)) return 0;
-    Cliente cliente(1, newNome, newQtdviagens, std::move(newHistoricoProduto));
+    int newId = Cliente::generateId();
+    if(!Cliente::verificaNome(newNome)){
+        erroNomeLog(newId);
+        return 0;
+    }
+    Cliente cliente(newId, newNome, newQtdviagens, std::move(newHistoricoProduto));
     cliente.guardaCliente();
-    return 0;
+    return 1;
 }
 
 void Cliente::guardaCliente(){
@@ -71,4 +86,16 @@ int Cliente::removeCliente(int idSearch){
     remove("../clientesBase.txt");
     rename("../temp.txt", "../clientesBase.txt");
     return 0;
+}
+
+int Cliente::generateId(){
+    std::ifstream dataBase("../clientesBase.txt");
+    std::string line;
+    int aux = 0;
+    char buffer[100];
+    if(dataBase.peek() == EOF) return 1;
+    while(getline(dataBase, line)){
+        sscanf(line.c_str(),"%d%*c", &aux);
+    };
+    return aux+1;
 }

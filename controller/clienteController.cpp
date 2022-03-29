@@ -10,6 +10,7 @@
     clienteView::readQtdViagens(newQtdViagens);
     clienteView::readHistorico(newHistoricoProduto);
     if(!Cliente::salvarCliente(newName, newQtdViagens, newHistoricoProduto)) return 0;
+    return 1;
 }
 
 int clienteController::removerClienteController(){

@@ -13,6 +13,8 @@ private:
     std::vector<int> historicoProduto;
     static int verificaNome(std::string nome);
     void guardaCliente();
+    static int generateId();
+    static void erroNomeLog(int id);
 
 public:
     Cliente(int newId, std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
