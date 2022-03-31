@@ -8,6 +8,7 @@ public:
     static int cadastrarCliente();
     static int removerClienteController();
     static int alterarClienteController();
+    static int consultarClienteController();
 };
 
 

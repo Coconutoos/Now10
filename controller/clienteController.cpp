@@ -24,7 +24,13 @@ int clienteController::alterarClienteController(){
     int alterarId;
     alterarId = clienteView::viewGetClienteId();
     if(Cliente::exists(alterarId)){
-        if(Cliente::alterar(alterarId)) return 1;
-        else return 0;
+        return Cliente::alterar(alterarId);
     }
+    return 0;
+}
+
+int clienteController::consultarClienteController(){
+    int id = clienteView::viewGetClienteId();
+    if(!Cliente::consultar(id)) return 0;
+    return 1;
 }

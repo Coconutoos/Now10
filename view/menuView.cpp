@@ -33,10 +33,14 @@ void menuView::menu(){
             case 2:
                 clienteController::removerClienteController();
                 break;
-            case 3:
-                if(clienteController::alterarClienteController()) std::cout << "Cliente alterado com sucesso!" << std::endl;
+            case 3:{
+                int flag = clienteController::alterarClienteController();
+                if(flag == 1) std::cout << "Cliente alterado com sucesso!" << std::endl;
+                if(flag == 0) std::cout << "Cliente nao encontrado!" << std::endl;
+                if(flag == -1) std::cout << "Erro! O cliente nao pode ser alterado!" << std::endl;}
                 break;
             case 4:
+                if(!clienteController::consultarClienteController()) std::cout <<  "Cliente nao encontrado!" << std::endl;
                 break;
             case 5:
                 break;

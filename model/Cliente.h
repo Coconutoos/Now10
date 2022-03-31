@@ -16,6 +16,7 @@ private:
     static int generateId();
     static void errorLog(int id, std::string msg);
     static bool validaCliente( int newId, std::string newNome, int newQtdviagens, std::vector<int> newHistoricoProduto);
+    static void lerVetor(std::string line);
 public:
     Cliente(int newId, std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
 
@@ -40,6 +41,9 @@ public:
     static int exists(int id);
 
     static int alterar(int id);
+
+    static int consultar(int id);
+
 };
 
 #endif //UNTER_CLIENTE_H

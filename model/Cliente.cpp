@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "../view/clienteView.h"
 #include <ctime>
+#include <cstring>
 
 Cliente::Cliente(int newId, std::string newNome, int newQtdviagens ,std::vector<int> newHistoricoProduto) : id(newId), nome(newNome), qtdViagens(newQtdviagens),historicoProduto(std::move(newHistoricoProduto)){}
 
@@ -42,6 +43,7 @@ void Cliente::errorLog(int id, std::string msg){
     if(log.is_open()){
         log << dt << " Erro (id: "<< id << ") : " << msg << std::endl;
     }
+    log.close();
 }
 
 bool Cliente::validaCliente(int newId,std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto){
@@ -52,7 +54,7 @@ bool Cliente::validaCliente(int newId,std::string newNome, int newQtdviagens,std
         return false;
     }
 
-    if(newQtdviagens <= 0){
+    if(newQtdviagens < 0){
         errorLog(newId, "Quantidade de viagens invalida");
         return false;
     }
@@ -71,7 +73,7 @@ int Cliente::salvarCliente(std::string newNome, int newQtdviagens,std::vector<in
     int newId = Cliente::generateId();
 
 
-    if(!validaCliente(newId, newNome, newQtdviagens, newHistoricoProduto) return 0;
+    if(!validaCliente(newId, newNome, newQtdviagens, newHistoricoProduto)) return 0;
 
     Cliente cliente(newId, newNome, newQtdviagens, std::move(newHistoricoProduto));
     cliente.guardaCliente();
@@ -121,6 +123,7 @@ int Cliente::generateId(){
     while(getline(dataBase, line)){
         sscanf(line.c_str(),"%d%*c", &aux);
     };
+    dataBase.close();
     return aux+1;
 }
 
@@ -157,6 +160,7 @@ int Cliente::alterar(int id){
         if(aux != id) temp << line << std::endl;
         else{
             flag = 1;
+            if(!validaCliente(id, newName, newQtdViagens, newHistoricoProduto)) return -1;
             temp << id << ',' << newName << ',' << newQtdViagens;
             for(it = newHistoricoProduto.begin(); it < newHistoricoProduto.end(); it++)
                 temp << "," << *it;
@@ -169,3 +173,42 @@ int Cliente::alterar(int id){
     rename("../temp.txt", "../clientesBase.txt");
     return flag;
 }
+
+void Cliente::lerVetor(std::string line){
+        int i = 0;
+        int n = line.size();
+        char aux[n+1];
+        strcpy(aux, line.c_str());
+        char *pt;
+        pt = strtok(aux, ",");
+        for(i = 0; pt; i++){
+            if (i > 2)std::cout << "Produto: " << pt << std::endl;
+            pt = strtok(nullptr, ",");
+        }
+
+}
+
+int Cliente::consultar(int id){
+    std::ifstream dataBase("../clientesBase.txt");
+    std::string line;
+    int flag = 0;
+    char name[50];
+    int buffer = 0;
+    int qtdViagens;
+    while(getline(dataBase, line)){
+        sscanf(line.c_str(),"%d%*c", &buffer);
+        if(buffer == id) {
+            flag = 1;
+            sscanf(line.c_str(), "%d,%[^,],%d", &id, name, &qtdViagens);
+            std::cout << "===================================" << std::endl;
+            std::cout << "Nome: " << name << std::endl;
+            std::cout << "Quantidade de viagens: " << qtdViagens << std::endl;
+            std::cout << "Historico de produtos:" << std::endl;
+            lerVetor(line);
+            std::cout << "===================================" << std::endl;
+        }
+    };
+    dataBase.close();
+    return flag;
+}
+
