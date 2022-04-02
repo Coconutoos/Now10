@@ -10,6 +10,7 @@ public:
     static int removerAlimentoController();
     static int alterarAlimentoController();
     static bool consultarAlimentoController();
+    static void printAllAlimentosController(std::ostream &dst);
 };
 
 

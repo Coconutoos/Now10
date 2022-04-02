@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include "Alimento.h"
+
 class Cliente {
 
 private:
@@ -17,7 +18,7 @@ private:
     static int generateId();
     static void errorLog(int id, std::string msg);
     static bool validaCliente( int newId,std::string newNome, std::string newDataNasc,int newQtdviagens,std::vector<int> newHistoricoProduto);
-    static void printHistorico(std::string line, bool isAtual);
+    static void printHistorico(std::string line, bool isAtual, std::ostream &dst);
 public:
     Cliente(int newId, std::string newNome, std::string newDataNasc,int newQtdviagens,std::vector<int> newHistoricoProduto);
 
@@ -43,7 +44,9 @@ public:
 
     static int alterar(int id);
 
-    static int consultar(int id);
+    static int consultar(int id, std::ostream &dst);
+
+    static std::vector<int> getAllClientesId();
 
 };
 

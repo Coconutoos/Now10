@@ -33,3 +33,18 @@ int clienteView::viewGetClienteId(){
     std::cin >> aux;
     return aux;
 }
+
+void clienteView::printAllClientesView(std::ostream &dst){
+    int idAux = 1;
+    std::vector<int> allClientes;
+    std::vector<int>::iterator it;
+    allClientes = Cliente::getAllClientesId();
+    dst << "******************Clientes******************" << std::endl;
+
+    for(it = allClientes.begin(); it < allClientes.end(); it++){
+        dst << std::endl;
+        Cliente::consultar(*it, dst);
+        dst << std::endl;
+    }
+    dst << "********************************************" << std::endl;
+}

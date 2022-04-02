@@ -180,7 +180,7 @@ int Cliente::alterar(int id){
     return flag;
 }
 
-void Cliente::printHistorico(std::string line, bool isAtual){
+void Cliente::printHistorico(std::string line, bool isAtual, std::ostream &dst){
         int i = 0;
         int n = line.size();
         int isDeleted;
@@ -190,13 +190,13 @@ void Cliente::printHistorico(std::string line, bool isAtual){
         pt = strtok(aux, ",");
         for(i = 0; pt; i++){
             if (i > 3){
-                if(!isAtual) std::cout << "Produto: " << pt << std::endl;
+                if(!isAtual) dst << "Produto: " << pt << std::endl;
                 else if(isAtual){
                     isDeleted = Alimento::isDeletedAlimento(std::stoi(pt));
                     if(isDeleted == 0)
-                        std::cout << "Produto: " << pt << std::endl;
+                        dst << "Produto: " << pt << std::endl;
                     else if(isDeleted == -1)
-                        std::cout << "Erro: Produto de id " << pt << "nao foi cadastrado!" << std::endl;
+                        dst << "Erro: Produto de id " << pt << "nao foi cadastrado!" << std::endl;
                 }
             }
             pt = strtok(nullptr, ",");
@@ -204,7 +204,7 @@ void Cliente::printHistorico(std::string line, bool isAtual){
 
 }
 
-int Cliente::consultar(int id){
+int Cliente::consultar(int id, std::ostream &dst){
     std::ifstream dataBase("../clientesBase.txt");
     std::string line;
     int flag = 0;
@@ -217,20 +217,36 @@ int Cliente::consultar(int id){
         if(buffer == id) {
             flag = 1;
             sscanf(line.c_str(), "%d,%[^,],%[^,],%d", &id, name, dataNasc,&qtdViagens);
-            std::cout << "===================================" << std::endl;
-            std::cout << "Nome: " << name << std::endl;
-            std::cout << "Data de nascimento: " << dataNasc << std::endl;
-            std::cout << "Quantidade de viagens: " << qtdViagens << std::endl;
-            std::cout << "-----------------------------------" << std::endl;
-            std::cout << "Historico Completo de produtos:" << std::endl;
-            printHistorico(line, false);
-            std::cout << "-----------------------------------" << std::endl;
-            std::cout << "Historico Atual de produtos:" << std::endl;
-            printHistorico(line, true);
-            std::cout << "===================================" << std::endl;
+            dst << "===================================" << std::endl;
+            dst << "Id: " << id << std::endl;
+            dst << "Nome: " << name << std::endl;
+            dst << "Data de nascimento: " << dataNasc << std::endl;
+            dst << "Quantidade de viagens: " << qtdViagens << std::endl;
+            dst << "-----------------------------------" << std::endl;
+            dst << "Historico Completo de produtos:" << std::endl;
+            printHistorico(line, false, dst);
+            dst << "-----------------------------------" << std::endl;
+            dst << "Historico Atual de produtos:" << std::endl;
+            printHistorico(line, true, dst);
+            dst << "===================================" << std::endl;
         }
     };
     dataBase.close();
     return flag;
 }
+
+std::vector<int> Cliente::getAllClientesId(){
+    std::ifstream dataBase("../clientesBase.txt");
+    std::vector<int> temp;
+    std::string line;
+    int aux = 0;
+    char buffer[100];
+    while(getline(dataBase, line)){
+        sscanf(line.c_str(),"%d%*c", &aux);
+        temp.push_back(aux);
+    };
+    dataBase.close();
+    return temp;
+}
+
 

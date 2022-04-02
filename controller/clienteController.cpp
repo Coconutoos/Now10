@@ -33,6 +33,10 @@ int clienteController::alterarClienteController(){
 
 int clienteController::consultarClienteController(){
     int id = clienteView::viewGetClienteId();
-    if(!Cliente::consultar(id)) return 0;
+    if(!Cliente::consultar(id, std::cout)) return 0;
     return 1;
+}
+
+void clienteController::printAllClientesController(std::ostream &dst){
+    clienteView::printAllClientesView(dst);
 }

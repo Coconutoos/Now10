@@ -2,6 +2,8 @@
 #define UNTER_ALIMENTOVIEW_H
 #include <iostream>
 #include <string>
+#include <vector>
+#include "../model/Alimento.h"
 
 class alimentoView {
 public:
@@ -10,6 +12,7 @@ public:
     static void readNewPreco(float &preco);
     static void readNewMarca(std::string &marca);
     static int getAlimentoId();
+    static void printAllAlimentosView(std::ostream &dst);
 };
 
 

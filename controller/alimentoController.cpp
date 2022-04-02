@@ -28,5 +28,10 @@ int alimentoController::alterarAlimentoController() {
 bool alimentoController::consultarAlimentoController() {
     int id;
     id = alimentoView::getAlimentoId();
-    return Alimento::consultarAlimento(id);
+    return Alimento::consultarAlimento(id, std::cout);
 }
+
+void alimentoController::printAllAlimentosController(std::ostream &dst) {
+        alimentoView::printAllAlimentosView(dst);
+}
+

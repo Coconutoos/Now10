@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "../model/Cliente.h"
 
 class clienteView{
 public:
@@ -11,6 +12,7 @@ public:
     static void readHistorico(std::vector<int> &historicoProduto);
     static int viewGetClienteId();
     static void readDataNasc(std::string &newDataNasc);
+    static void printAllClientesView(std::ostream &dst);
 };
 
 

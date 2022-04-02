@@ -12,7 +12,6 @@ private:
     float preco;
     std::string marca;
     int isDeleted;
-    void guardaCliente();
     static int generateId();
     static bool validaAlimento(int id, std::string nome, float valorCalorico, float preco);
     void guardaAlimento();
@@ -24,7 +23,8 @@ public:
     static int salvarAlimento(std::string newNome, float newValCalorico, float newPreco ,std::string newMarca);
     static int removerAlimento(int id);
     static int alterarAlimento(int id);
-    static bool consultarAlimento(int id);
+    static bool consultarAlimento(int id, std::ostream &dst);
+    static std::vector<int> getAllAlimentosId();
 };
 
 

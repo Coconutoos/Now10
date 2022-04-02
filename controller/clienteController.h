@@ -9,6 +9,7 @@ public:
     static int removerClienteController();
     static int alterarClienteController();
     static int consultarClienteController();
+    static void printAllClientesController(std::ostream &dst);
 };
 
 

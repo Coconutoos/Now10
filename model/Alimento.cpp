@@ -132,7 +132,7 @@ int Alimento::alterarAlimento(int id){
         if(auxId != id) temp << line << std::endl;
         else if(auxId == id && !auxIsDeleted){
             flag = 1;
-            temp << id << ',' << auxIsDeleted << newName << ',' << newValCalorico << ',' << newPreco << std::endl;
+            temp << id << ',' << auxIsDeleted << ',' << newName << ',' << newValCalorico << ',' << newPreco << std::endl;
         }
         else if(auxId == id && !auxIsDeleted)
             flag = -1;
@@ -144,7 +144,7 @@ int Alimento::alterarAlimento(int id){
     return flag;
 }
 
-bool Alimento::consultarAlimento(int id){
+bool Alimento::consultarAlimento(int id, std::ostream &dst){
     std::ifstream dataBase("../alimentosBase.txt");
     std::string line;
     int isDeleted;
@@ -154,22 +154,39 @@ bool Alimento::consultarAlimento(int id){
     char marca[50];
     int auxId, auxIsDeleted;
     while(getline(dataBase, line)){
-        sscanf(line.c_str(),"%d%d", &auxId, &auxIsDeleted);
+        sscanf(line.c_str(),"%d,%d", &auxId, &auxIsDeleted);
+        //std::cout << (auxId == id) << std::endl;
         if(auxId == id && !auxIsDeleted) {
-            sscanf(line.c_str(), "%d,%d,%[^,],%f,%f,%[^,]", &auxId, &auxIsDeleted, nome, &valCalorico, &preco, marca);
-            std::cout << "===================================" << std::endl;
-            std::cout << "Id: " << id << std::endl;
-            std::cout << "Nome: " << nome << std::endl;
-            std::cout << "Valor Calorico: " << valCalorico << std::endl;
-            std::cout << "Preco: " << preco << std::endl;
-            std::cout << "Marca: " << marca << std::endl;
-            std::cout << "===================================" << std::endl;
+            sscanf(line.c_str(), "%d,%d,%[^,],%f,%f,%[^,\n]", &auxId, &auxIsDeleted, nome, &valCalorico, &preco, marca);
+            dst << "===================================" << std::endl;
+            dst << "Id: " << id << std::endl;
+            dst << "Nome: " << nome << std::endl;
+            dst << "Valor Calorico: " << valCalorico << std::endl;
+            dst << "Preco: " << preco << std::endl;
+            dst << "Marca: " << marca << std::endl;
+            dst << "===================================" << std::endl;
             dataBase.close();
             return true;
         }
     };
     dataBase.close();
     return false;
+}
+
+std::vector<int> Alimento::getAllAlimentosId(){
+    std::ifstream dataBase("../alimentosBase.txt");
+    std::vector<int> temp;
+    std::string line;
+    int auxId, auxIsDeleted;
+    char buffer[100];
+    while(getline(dataBase, line)){
+        sscanf(line.c_str(),"%d,%d,%*c", &auxId, &auxIsDeleted);
+
+        if(!auxIsDeleted)
+            temp.push_back(auxId);
+    };
+    dataBase.close();
+    return temp;
 }
 
 

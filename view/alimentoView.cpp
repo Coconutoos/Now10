@@ -20,6 +20,7 @@ void alimentoView::readNewMarca(std::string &marca){
     std::cout << "Digite a marca do alimento" << std::endl;
     std::cin.ignore();
     std::getline(std::cin, marca);
+    if(marca.empty()) marca = "Nao cadastrado";
 }
 
 int alimentoView::getAlimentoId() {
@@ -27,4 +28,18 @@ int alimentoView::getAlimentoId() {
     std::cout << "Digite o id do alimento:" << std::endl;
     std::cin >> aux;
     return aux;
+}
+
+void alimentoView::printAllAlimentosView(std::ostream &dst) {
+    int idAux = 1;
+    std::vector<int> allAlimentos;
+    std::vector<int>::iterator it;
+    allAlimentos = Alimento::getAllAlimentosId();
+    dst << "******************Alimentos******************" << std::endl;
+    for(it = allAlimentos.begin(); it < allAlimentos.end(); it++){
+        dst << std::endl;
+        Alimento::consultarAlimento(*it, dst);
+        dst << std::endl;
+    }
+    dst << "*********************************************" << std::endl;
 }
