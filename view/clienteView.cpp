@@ -7,6 +7,11 @@ void clienteView::readName(std::string &name){
 
 }
 
+void clienteView::readDataNasc(std::string &dataNasc){
+    std::cout << "Digite a data de nascimento do cliente" << std::endl;
+    std::getline(std::cin, dataNasc);
+}
+
 void clienteView::readQtdViagens(int &qtdViagens){
     std::cout << "Digite a Quantidade de viagens do cliente. Digite 0 para nao cadastrar" << std::endl;
     std::cin >> qtdViagens;

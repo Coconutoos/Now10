@@ -5,7 +5,7 @@
 #include <ctime>
 #include <cstring>
 
-Cliente::Cliente(int newId, std::string newNome, int newQtdviagens ,std::vector<int> newHistoricoProduto) : id(newId), nome(newNome), qtdViagens(newQtdviagens),historicoProduto(std::move(newHistoricoProduto)){}
+Cliente::Cliente(int newId, std::string newNome, std::string newDataNasc,int newQtdviagens ,std::vector<int> newHistoricoProduto) : id(newId), nome(newNome), dataNasc(newDataNasc),qtdViagens(newQtdviagens),historicoProduto(std::move(newHistoricoProduto)){}
 
 int Cliente::getId() const {
     return id;
@@ -46,14 +46,17 @@ void Cliente::errorLog(int id, std::string msg){
     log.close();
 }
 
-bool Cliente::validaCliente(int newId,std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto){
+bool Cliente::validaCliente(int newId,std::string newNome, std::string newDataNasc,int newQtdviagens,std::vector<int> newHistoricoProduto){
     std::vector<int>::iterator it;
 
     if(!Cliente::verificaNome(newNome)){
         errorLog(newId, "Nome nao cadastrado");
         return false;
     }
-
+    if(newDataNasc.empty()){
+        errorLog(newId, "Data de Nascimento nao cadastrada");
+        return false;
+    }
     if(newQtdviagens < 0){
         errorLog(newId, "Quantidade de viagens invalida");
         return false;
@@ -69,13 +72,13 @@ bool Cliente::validaCliente(int newId,std::string newNome, int newQtdviagens,std
     return true;
 }
 
-int Cliente::salvarCliente(std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto){
+int Cliente::salvarCliente(std::string newNome, std::string newDataNasc,int newQtdviagens,std::vector<int> newHistoricoProduto){
     int newId = Cliente::generateId();
 
 
-    if(!validaCliente(newId, newNome, newQtdviagens, newHistoricoProduto)) return 0;
+    if(!validaCliente(newId, newNome, newDataNasc,newQtdviagens, newHistoricoProduto)) return 0;
 
-    Cliente cliente(newId, newNome, newQtdviagens, std::move(newHistoricoProduto));
+    Cliente cliente(newId, newNome, newDataNasc,newQtdviagens, std::move(newHistoricoProduto));
     cliente.guardaCliente();
     return 1;
 }
@@ -84,7 +87,7 @@ void Cliente::guardaCliente(){
     std::vector<int>::iterator it;
     std::ofstream dataBase("../clientesBase.txt", std::fstream::app);
     if(dataBase.is_open()){
-        dataBase << id << ',' <<nome << ',' << qtdViagens;
+        dataBase << id << ',' << nome << ',' << dataNasc << ',' << qtdViagens;
         for(it = historicoProduto.begin(); it < historicoProduto.end(); it++)
             dataBase << "," << *it;
     }
@@ -142,13 +145,15 @@ int Cliente::exists(int id){
 
 int Cliente::alterar(int id){
     std::string newName;
+    std::string newDataNasc;
     int newQtdViagens;
     int flag = 0;
     std::vector<int> newHistoricoProduto;
     clienteView::readName(newName);
+    clienteView::readDataNasc(newDataNasc);
+
     clienteView::readQtdViagens(newQtdViagens);
     clienteView::readHistorico(newHistoricoProduto);
-
     std::vector<int>::iterator it;
     std::ifstream dataBase("../clientesBase.txt");
     std::ofstream temp("../temp.txt");
@@ -160,8 +165,9 @@ int Cliente::alterar(int id){
         if(aux != id) temp << line << std::endl;
         else{
             flag = 1;
-            if(!validaCliente(id, newName, newQtdViagens, newHistoricoProduto)) return -1;
-            temp << id << ',' << newName << ',' << newQtdViagens;
+            if(!validaCliente(id, newName, newDataNasc,newQtdViagens, newHistoricoProduto)) return -1;
+            temp << id << ',' << newName << ',' << newDataNasc << ',' << newQtdViagens;
+            std::cout << newDataNasc << std::endl;
             for(it = newHistoricoProduto.begin(); it < newHistoricoProduto.end(); it++)
                 temp << "," << *it;
             temp << std::endl;
@@ -174,15 +180,25 @@ int Cliente::alterar(int id){
     return flag;
 }
 
-void Cliente::lerVetor(std::string line){
+void Cliente::printHistorico(std::string line, bool isAtual){
         int i = 0;
         int n = line.size();
+        int isDeleted;
         char aux[n+1];
         strcpy(aux, line.c_str());
         char *pt;
         pt = strtok(aux, ",");
         for(i = 0; pt; i++){
-            if (i > 2)std::cout << "Produto: " << pt << std::endl;
+            if (i > 3){
+                if(!isAtual) std::cout << "Produto: " << pt << std::endl;
+                else if(isAtual){
+                    isDeleted = Alimento::isDeletedAlimento(std::stoi(pt));
+                    if(isDeleted == 0)
+                        std::cout << "Produto: " << pt << std::endl;
+                    else if(isDeleted == -1)
+                        std::cout << "Erro: Produto de id " << pt << "nao foi cadastrado!" << std::endl;
+                }
+            }
             pt = strtok(nullptr, ",");
         }
 
@@ -193,18 +209,24 @@ int Cliente::consultar(int id){
     std::string line;
     int flag = 0;
     char name[50];
+    char dataNasc[11];
     int buffer = 0;
     int qtdViagens;
     while(getline(dataBase, line)){
         sscanf(line.c_str(),"%d%*c", &buffer);
         if(buffer == id) {
             flag = 1;
-            sscanf(line.c_str(), "%d,%[^,],%d", &id, name, &qtdViagens);
+            sscanf(line.c_str(), "%d,%[^,],%[^,],%d", &id, name, dataNasc,&qtdViagens);
             std::cout << "===================================" << std::endl;
             std::cout << "Nome: " << name << std::endl;
+            std::cout << "Data de nascimento: " << dataNasc << std::endl;
             std::cout << "Quantidade de viagens: " << qtdViagens << std::endl;
-            std::cout << "Historico de produtos:" << std::endl;
-            lerVetor(line);
+            std::cout << "-----------------------------------" << std::endl;
+            std::cout << "Historico Completo de produtos:" << std::endl;
+            printHistorico(line, false);
+            std::cout << "-----------------------------------" << std::endl;
+            std::cout << "Historico Atual de produtos:" << std::endl;
+            printHistorico(line, true);
             std::cout << "===================================" << std::endl;
         }
     };

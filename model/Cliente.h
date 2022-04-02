@@ -3,22 +3,23 @@
 #include <string>
 #include <vector>
 #include <fstream>
-
+#include "Alimento.h"
 class Cliente {
 
 private:
     int id;
     std::string nome;
+    std::string dataNasc;
     int qtdViagens;
     std::vector<int> historicoProduto;
     static int verificaNome(std::string nome);
     void guardaCliente();
     static int generateId();
     static void errorLog(int id, std::string msg);
-    static bool validaCliente( int newId, std::string newNome, int newQtdviagens, std::vector<int> newHistoricoProduto);
-    static void lerVetor(std::string line);
+    static bool validaCliente( int newId,std::string newNome, std::string newDataNasc,int newQtdviagens,std::vector<int> newHistoricoProduto);
+    static void printHistorico(std::string line, bool isAtual);
 public:
-    Cliente(int newId, std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
+    Cliente(int newId, std::string newNome, std::string newDataNasc,int newQtdviagens,std::vector<int> newHistoricoProduto);
 
     int getId() const;
 
@@ -34,7 +35,7 @@ public:
 
     void setHistoricoProduto(const std::vector<int> &historicoProduto);
 
-    static int salvarCliente(std::string newNome, int newQtdviagens,std::vector<int> newHistoricoProduto);
+    static int salvarCliente(std::string newNome, std::string newDataNasc,int newQtdviagens,std::vector<int> newHistoricoProduto);
 
     static int removeCliente(int idSearch);
 

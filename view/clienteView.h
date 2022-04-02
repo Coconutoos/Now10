@@ -10,6 +10,7 @@ public:
     static void readQtdViagens(int &qtdViagens);
     static void readHistorico(std::vector<int> &historicoProduto);
     static int viewGetClienteId();
+    static void readDataNasc(std::string &newDataNasc);
 };
 
 

@@ -30,8 +30,10 @@ void menuView::menu(){
                 if(clienteController::cadastrarCliente()) std::cout << "Cliente cadastrado!" << std::endl;
                 else std::cout << "Erro! o cliente nao foi cadastrado!" << std::endl;
                 break;
-            case 2:
-                clienteController::removerClienteController();
+            case 2:{
+                if(clienteController::removerClienteController()) std::cout << "Cliente removido!" << std::endl;
+                else std::cout << "Cliente nao encontrado!" << std::endl;
+            }
                 break;
             case 3:{
                 int flag = clienteController::alterarClienteController();
@@ -43,12 +45,24 @@ void menuView::menu(){
                 if(!clienteController::consultarClienteController()) std::cout <<  "Cliente nao encontrado!" << std::endl;
                 break;
             case 5:
+                if(alimentoController::cadastrarAlimentoController()) std::cout << "Alimento Cadastrado!" << std::endl;
+                else std::cout << "Erro! O alimento nao foi cadastrado." << std::endl;
                 break;
-            case 6:
+            case 6: {
+                int flag = alimentoController::removerAlimentoController();
+                if (flag == 0) std::cout << "Erro! alimento nao encontrado" << std::endl;
+                else if (flag == 1) std::cout << "Alimento removido com sucesso!" << std::endl;
+                else if (flag == -1) std::cout << "Erro! o alimento ja foi removido" << std::endl;}
                 break;
-            case 7:
+            case 7:{
+                int flag = alimentoController::alterarAlimentoController();
+                if (flag == 0) std::cout << "Erro! alimento nao encontrado" << std::endl;
+                else if (flag == 1) std::cout << "Alimento alterado com sucesso!" << std::endl;
+                else if (flag == -1) std::cout << "Erro! Dados inseridos invalidos, o alimento nao foi alterado" << std::endl;}
                 break;
-            case 8:
+            case 8:{
+                bool flag = alimentoController::consultarAlimentoController();
+                if(!flag) std::cout << "Alimento nao encontrado!";}
                 break;
             case 9:
                 break;

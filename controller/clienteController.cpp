@@ -4,12 +4,14 @@
 
  int clienteController::cadastrarCliente() {
     std::string newName;
+    std::string newDataNasc;
     int newQtdViagens;
     std::vector<int> newHistoricoProduto;
     clienteView::readName(newName);
+    clienteView::readDataNasc(newDataNasc);
     clienteView::readQtdViagens(newQtdViagens);
     clienteView::readHistorico(newHistoricoProduto);
-    if(!Cliente::salvarCliente(newName, newQtdViagens, newHistoricoProduto)) return 0;
+    if(!Cliente::salvarCliente(newName, newDataNasc,newQtdViagens, newHistoricoProduto)) return 0;
     return 1;
 }
 
