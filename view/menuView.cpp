@@ -31,13 +31,13 @@ void menuView::gerarRelatorio(){
     time_t now = time(0);
     std::string dt = ctime(&now);
     dt.pop_back();
-    relatorioPath = "../Relatorio " + dt + ".txt";
+    relatorioPath = "Relatorio " + dt + ".txt";
     std::replace( relatorioPath.begin(), relatorioPath.end(), ' ', '_');
     std::replace( relatorioPath.begin(), relatorioPath.end(), ':', '_');
     std::ofstream relatorio(relatorioPath, std::ofstream::app);
     clienteController::printAllClientesController(relatorio);
     alimentoController::printAllAlimentosController(relatorio);
-    std::cout << relatorioPath << std::endl;
+    std::cout << relatorioPath << " criado!" << std::endl;
     relatorio.close();
 }
 

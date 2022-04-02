@@ -23,7 +23,7 @@ bool Alimento::validaAlimento(int id, std::string nome, float valorCalorico, flo
 }
 
 void Alimento::errorLog(int id, std::string msg){
-    std::ofstream log("../log.txt", std::fstream::app);
+    std::ofstream log("log.txt", std::fstream::app);
     time_t now = time(0);
     std::string dt = ctime(&now);
     dt.pop_back();
@@ -46,7 +46,7 @@ int Alimento::salvarAlimento(std::string newNome, float newValCalorico, float ne
 }
 
 void Alimento::guardaAlimento(){
-    std::ofstream dataBase("../alimentosBase.txt", std::fstream::app);
+    std::ofstream dataBase("alimentosBase.txt", std::fstream::app);
     if(dataBase.is_open()){
         dataBase << id << ',' << isDeleted << ',' << nome << ',' << valCalorico << ',' << preco << ',' << marca;
     }
@@ -56,7 +56,7 @@ void Alimento::guardaAlimento(){
 
 
 int Alimento::generateId(){
-    std::ifstream dataBase("../alimentosBase.txt");
+    std::ifstream dataBase("alimentosBase.txt");
     std::string line;
     int aux = 0;
     char buffer[100];
@@ -69,7 +69,7 @@ int Alimento::generateId(){
 }
 #include<iostream>
 int Alimento::isDeletedAlimento(int id){
-    std::ifstream dataBase("../alimentosBase.txt");
+    std::ifstream dataBase("alimentosBase.txt");
     std::string line;
     int searchId, isDeletedAux;
     char buffer[100];
@@ -85,8 +85,8 @@ int Alimento::isDeletedAlimento(int id){
 }
 
 int Alimento::removerAlimento(int id){
-    std::ifstream dataBase("../alimentosBase.txt");
-    std::ofstream temp("../temp.txt");
+    std::ifstream dataBase("alimentosBase.txt");
+    std::ofstream temp("temp.txt");
     std::string line;
     int auxId, auxIsDeleted , resultado = 0;
     char buffer[100];
@@ -108,8 +108,8 @@ int Alimento::removerAlimento(int id){
     };
     dataBase.close();
     temp.close();
-    remove("../alimentosBase.txt");
-    rename("../temp.txt", "../alimentosBase.txt");
+    remove("alimentosBase.txt");
+    rename("temp.txt", "alimentosBase.txt");
     return resultado;
 }
 int Alimento::alterarAlimento(int id){
@@ -122,8 +122,8 @@ int Alimento::alterarAlimento(int id){
     alimentoView::readNewPreco(newPreco);
     alimentoView::readNewMarca(newMarca);
     if(!validaAlimento(id, newName, newValCalorico, newPreco)) return -1;
-    std::ifstream dataBase("../alimentosBase.txt");
-    std::ofstream temp("../temp.txt");
+    std::ifstream dataBase("alimentosBase.txt");
+    std::ofstream temp("temp.txt");
     std::string line;
     int flag = 0;
     int auxId, auxIsDeleted;
@@ -132,20 +132,20 @@ int Alimento::alterarAlimento(int id){
         if(auxId != id) temp << line << std::endl;
         else if(auxId == id && !auxIsDeleted){
             flag = 1;
-            temp << id << ',' << auxIsDeleted << ',' << newName << ',' << newValCalorico << ',' << newPreco << std::endl;
+            temp << id << ',' << auxIsDeleted << ',' << newName << ',' << newValCalorico << ',' << newPreco << ',' << newMarca <<std::endl;
         }
         else if(auxId == id && !auxIsDeleted)
             flag = -1;
     };
     dataBase.close();
     temp.close();
-    remove("../alimentosBase.txt");
-    rename("../temp.txt", "../alimentosBase.txt");
+    remove("alimentosBase.txt");
+    rename("temp.txt", "alimentosBase.txt");
     return flag;
 }
 
 bool Alimento::consultarAlimento(int id, std::ostream &dst){
-    std::ifstream dataBase("../alimentosBase.txt");
+    std::ifstream dataBase("alimentosBase.txt");
     std::string line;
     int isDeleted;
     char nome[50];
@@ -174,7 +174,7 @@ bool Alimento::consultarAlimento(int id, std::ostream &dst){
 }
 
 std::vector<int> Alimento::getAllAlimentosId(){
-    std::ifstream dataBase("../alimentosBase.txt");
+    std::ifstream dataBase("alimentosBase.txt");
     std::vector<int> temp;
     std::string line;
     int auxId, auxIsDeleted;

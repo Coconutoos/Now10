@@ -36,7 +36,7 @@ void Cliente::setHistoricoProduto(const std::vector<int> &historicoProduto) {
 }
 
 void Cliente::errorLog(int id, std::string msg){
-    std::ofstream log("../log.txt", std::fstream::app);
+    std::ofstream log("log.txt", std::fstream::app);
     time_t now = time(0);
     std::string dt = ctime(&now);
     dt.pop_back();
@@ -85,7 +85,7 @@ int Cliente::salvarCliente(std::string newNome, std::string newDataNasc,int newQ
 
 void Cliente::guardaCliente(){
     std::vector<int>::iterator it;
-    std::ofstream dataBase("../clientesBase.txt", std::fstream::app);
+    std::ofstream dataBase("clientesBase.txt", std::fstream::app);
     if(dataBase.is_open()){
         dataBase << id << ',' << nome << ',' << dataNasc << ',' << qtdViagens;
         for(it = historicoProduto.begin(); it < historicoProduto.end(); it++)
@@ -101,8 +101,8 @@ int Cliente::verificaNome(std::string nome){
 }
 
 int Cliente::removeCliente(int idSearch){
-    std::ifstream dataBase("../clientesBase.txt");
-    std::ofstream temp("../temp.txt");
+    std::ifstream dataBase("clientesBase.txt");
+    std::ofstream temp("temp.txt");
     std::string line;
     int aux = 0;
     char buffer[100];
@@ -112,13 +112,13 @@ int Cliente::removeCliente(int idSearch){
     };
     dataBase.close();
     temp.close();
-    remove("../clientesBase.txt");
-    rename("../temp.txt", "../clientesBase.txt");
+    remove("clientesBase.txt");
+    rename("temp.txt", "clientesBase.txt");
     return 0;
 }
 
 int Cliente::generateId(){
-    std::ifstream dataBase("../clientesBase.txt");
+    std::ifstream dataBase("clientesBase.txt");
     std::string line;
     int aux = 0;
     char buffer[100];
@@ -131,7 +131,7 @@ int Cliente::generateId(){
 }
 
 int Cliente::exists(int id){
-    std::ifstream dataBase("../clientesBase.txt");
+    std::ifstream dataBase("clientesBase.txt");
     std::string line;
     int aux = 0;
     char buffer[100];
@@ -155,8 +155,8 @@ int Cliente::alterar(int id){
     clienteView::readQtdViagens(newQtdViagens);
     clienteView::readHistorico(newHistoricoProduto);
     std::vector<int>::iterator it;
-    std::ifstream dataBase("../clientesBase.txt");
-    std::ofstream temp("../temp.txt");
+    std::ifstream dataBase("clientesBase.txt");
+    std::ofstream temp("temp.txt");
     std::string line;
     int aux = 0;
     char buffer[100];
@@ -175,8 +175,8 @@ int Cliente::alterar(int id){
     };
     dataBase.close();
     temp.close();
-    remove("../clientesBase.txt");
-    rename("../temp.txt", "../clientesBase.txt");
+    remove("clientesBase.txt");
+    rename("temp.txt", "clientesBase.txt");
     return flag;
 }
 
@@ -205,7 +205,7 @@ void Cliente::printHistorico(std::string line, bool isAtual, std::ostream &dst){
 }
 
 int Cliente::consultar(int id, std::ostream &dst){
-    std::ifstream dataBase("../clientesBase.txt");
+    std::ifstream dataBase("clientesBase.txt");
     std::string line;
     int flag = 0;
     char name[50];
@@ -236,7 +236,7 @@ int Cliente::consultar(int id, std::ostream &dst){
 }
 
 std::vector<int> Cliente::getAllClientesId(){
-    std::ifstream dataBase("../clientesBase.txt");
+    std::ifstream dataBase("clientesBase.txt");
     std::vector<int> temp;
     std::string line;
     int aux = 0;
