@@ -196,7 +196,7 @@ void Cliente::printHistorico(std::string line, bool isAtual, std::ostream &dst){
                     if(isDeleted == 0)
                         dst << "Produto: " << pt << std::endl;
                     else if(isDeleted == -1)
-                        dst << "Erro: Produto de id " << pt << "nao foi cadastrado!" << std::endl;
+                        dst << "Erro: Produto de id " << pt << " nao foi cadastrado!" << std::endl;
                 }
             }
             pt = strtok(nullptr, ",");

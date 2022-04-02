@@ -7,7 +7,7 @@ public:
     void printMenu();
     void menu();
     void printAllDados();
-    void gerarRelatorio();
+    static void gerarRelatorio();
 };
 
 #endif //UNTER_MENUVIEW_H

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "menuView.h"
+#include <algorithm>
 
 
 void menuView::printMenu(){
@@ -29,10 +30,14 @@ void menuView::gerarRelatorio(){
     std::string relatorioPath;
     time_t now = time(0);
     std::string dt = ctime(&now);
+    dt.pop_back();
     relatorioPath = "../Relatorio " + dt + ".txt";
-    std::ofstream relatorio(relatorioPath);
+    std::replace( relatorioPath.begin(), relatorioPath.end(), ' ', '_');
+    std::replace( relatorioPath.begin(), relatorioPath.end(), ':', '_');
+    std::ofstream relatorio(relatorioPath, std::ofstream::app);
     clienteController::printAllClientesController(relatorio);
     alimentoController::printAllAlimentosController(relatorio);
+    std::cout << relatorioPath << std::endl;
     relatorio.close();
 }
 
@@ -92,6 +97,7 @@ void menuView::menu(){
                 break;
             case 9:
                 menuView::gerarRelatorio();
+
                 break;
             case 0:
                 break;
