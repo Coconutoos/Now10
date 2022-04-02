@@ -104,17 +104,21 @@ int Cliente::removeCliente(int idSearch){
     std::ifstream dataBase("clientesBase.txt");
     std::ofstream temp("temp.txt");
     std::string line;
+    int wasFound = 0;
     int aux = 0;
     char buffer[100];
     while(getline(dataBase, line)){
         sscanf(line.c_str(),"%d%*c", &aux);
-        if(aux != idSearch) temp << line << std::endl;
+        if(aux != idSearch){
+            temp << line << std::endl;
+            wasFound = 1;
+        }
     };
     dataBase.close();
     temp.close();
     remove("clientesBase.txt");
     rename("temp.txt", "clientesBase.txt");
-    return 0;
+    return wasFound;
 }
 
 int Cliente::generateId(){
